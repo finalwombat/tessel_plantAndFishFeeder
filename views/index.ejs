@@ -15,6 +15,7 @@
       Status: <span class="led-status"></span>
     </li>
   </ul>
+  <div id="currentTime" </div>
   <script type="text/javascript">
       // Add eventlistener to button
       var button = document.getElementById('pump');
@@ -45,7 +46,11 @@
         req.send();
         }
 
-
+        var currentdate = new Date();
+        var datetime =
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes();
+        document.getElementById('currentTime').innerHTML = datetime;
 
     </script>
     <div id="results"></div?
