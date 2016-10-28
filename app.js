@@ -12,9 +12,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
+
   console.log('/');
-        res.render('index');
-    });
+  res.render('index');
+  });
 app.get('/pump/', function(req, res){
   console.log('pump');
   relay.toggle(1, function(err){
