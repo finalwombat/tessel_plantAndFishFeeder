@@ -41,8 +41,17 @@
         var minute = minutes.options[minutes.selectedIndex].value;
 
         // create new date from user valuse
-        var date = moment().hours(parseInt(hour)).minutes(parseInt(minute));
-        var currentTime = moment().format();
-        console.log(moment.duration(date.diff(currentTime)).asMinutes());
-        document.getElementById('timerValue').innerHTML = date;
+        var time = moment().hours(parseInt(hour)).minutes(parseInt(minute));
+        var now = moment();
+
+        if(moment(time).isBefore(now)){
+          time.add(1, 'days');
+        }
+        var diff = moment.duration(time.diff(now));
+
+        console.log(now.format());
+        console.log(time.format());
+        console.log(diff.humanize(true));
+        console.log(moment().add(diff).calendar());
+        document.getElementById('timerValue').innerHTML = moment().add(diff).calendar();
       }
