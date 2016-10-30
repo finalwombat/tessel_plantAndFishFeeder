@@ -8,7 +8,7 @@ var relay = relaylib.use(tessel.port['A']);
 
 var port = process.env.PORT || 8080;
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + 'public/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
