@@ -49,9 +49,20 @@
         }
         var diff = moment.duration(time.diff(now));
 
-        console.log(now.format());
-        console.log(time.format());
-        console.log(diff.humanize(true));
-        console.log(moment().add(diff).calendar());
+        console.log(diff._milliseconds);
         document.getElementById('timerValue').innerHTML = moment().add(diff).calendar();
+
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function(e) {
+          if (req.readyState == 4 && req.status == 200) {
+            if (req.status == 200) {
+              var response = JSON.parse(req.responseText);
+              statusNode.textContent = response.on ? 'ON' : 'OFF';
+            } else {
+              console.log('Error');
+            }
+          }
+        }
+        req.open('POST', '/timer/add/', true);
+        req.send(diff._milliseconds);
       }
