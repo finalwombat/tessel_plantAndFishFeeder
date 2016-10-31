@@ -4,19 +4,37 @@ var tessel = require('tessel');
 var relaylib = require('relay-mono');
 var relay = relaylib.use(tessel.port['A']);
 
-module.exports = function(){
-  function togglePump(){
+module.exports = {
+
+  togglePump:  function(callback){
     relay.toggle(1, function(err){
       if (err) {
-        return("error toggling relay", err);
+        callback("error toggling relay", err);
       } else {
         var state;
         relay.getState(1, function(err, state){
-          if(err){return err}
-          else {return state}
+          console.log('function: ' + state);
+          if(err){callback(err)}
+          else {callback(state)}
         });
 
       }
     });
+  },
+
+  startPump: function(){
+    relay.turnOn(1, function(err){
+      if(err){
+        console.log(err);
+      } else {console.log('pump on')}
+    });
+  },
+  stopPump: function(){
+    relay.turnOff(1, function(err){
+      if(err){
+        console.log(err)
+      }
+    });
   }
+
 }

@@ -43,26 +43,28 @@
         // create new date from user valuse
         var time = moment().hours(parseInt(hour)).minutes(parseInt(minute));
         var now = moment();
-
+        console.log('time before: ' + time.format());
         if(moment(time).isBefore(now)){
           time.add(1, 'days');
         }
+        console.log('time after: ' + time.format());
         var diff = moment.duration(time.diff(now));
 
         console.log(diff._milliseconds);
         document.getElementById('timerValue').innerHTML = moment().add(diff).calendar();
 
-        var req = new XMLHttpRequest();
-        req.onreadystatechange = function(e) {
-          if (req.readyState == 4 && req.status == 200) {
-            if (req.status == 200) {
-              var response = JSON.parse(req.responseText);
-              statusNode.textContent = response.on ? 'ON' : 'OFF';
-            } else {
-              console.log('Error');
-            }
-          }
-        }
-        req.open('POST', '/timer/add/', true);
-        req.send(diff._milliseconds);
+        var timer = {
+          time: time,
+          timeUntil: diff._milliseconds,
+          duration: 2,
+          repeat: 24
+        };
+
+        $.ajax({
+          type: "POST",
+          url: "/timer/add/",
+          data: JSON.stringify(timer),
+          dataType: "json",
+          contentType: "application/json"
+        });
       }
