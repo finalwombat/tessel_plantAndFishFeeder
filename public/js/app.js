@@ -43,19 +43,17 @@
         // create new date from user valuse
         var time = moment().hours(parseInt(hour)).minutes(parseInt(minute));
         var now = moment();
-        console.log('time before: ' + time.format());
+
         if(moment(time).isBefore(now)){
           time.add(1, 'days');
         }
         console.log('time after: ' + time.format());
-        var diff = moment.duration(time.diff(now));
-
-        console.log(diff._milliseconds);
-        document.getElementById('timerValue').innerHTML = moment().add(diff).calendar();
+        console.log('UTC: ' + moment.utc(time).format());
+        timeUTC = moment.utc(time);
+        document.getElementById('timerValue').innerHTML = moment().calendar(time);
 
         var timer = {
           time: time,
-          timeUntil: diff._milliseconds,
           duration: 2,
           repeat: 24
         };
