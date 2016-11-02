@@ -4,7 +4,10 @@
     pumpButton.addEventListener('click', togglePump);
 
     var setTimerButton = document.getElementById('setTimer');
-    setTimerButton.addEventListener('click', getDiffTime);
+    setTimerButton.addEventListener('click', setTimer);
+
+    var setTimerButton = document.getElementById('removeTimer');
+    setTimerButton.addEventListener('click', removeTimer);
 
 
     function togglePump (event) {
@@ -31,7 +34,7 @@
       req.send();
       }
 
-      function getDiffTime(){
+      function setTimer(){
 
         //get the user values
         var hours = document.getElementById('hours');
@@ -61,6 +64,36 @@
         $.ajax({
           type: "POST",
           url: "/timer/add/",
+          data: JSON.stringify(timer),
+          dataType: "json",
+          contentType: "application/json"
+        });
+      }
+
+      function removeTimer(){
+
+        //get the user values
+        var hours = document.getElementById('hours');
+        var minutes = document.getElementById('minutes');
+
+        var hour = hours.options[hours.selectedIndex].value;
+        var minute = minutes.options[minutes.selectedIndex].value;
+
+        // create new date from user valuse
+        var time = moment().hours(parseInt(hour)).minutes(parseInt(minute));
+        var now = moment();
+
+        if(moment(time).isBefore(now)){
+          time.add(1, 'days');
+        }
+
+        timeUTC = moment.utc(time);
+        timer = {hours: timeUTC.hours(),
+                  minutes: timeUTC.minutes()};
+
+        $.ajax({
+          type: "POST",
+          url: "/timer/remove/",
           data: JSON.stringify(timer),
           dataType: "json",
           contentType: "application/json"

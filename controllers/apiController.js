@@ -18,8 +18,7 @@ module.exports = function(app){
     var timer = req.body;
     var time = new Date(timer.time);
     var j = schedule.scheduleJob({hour: time.getHours(), minute: time.getMinutes()}, function(){
-      console.log('Time for tea!');
-      console.log(time.getHours() + ':' + time.getMinutes());
+
       console.log('startPump')
       tesselController.startPump();
 
@@ -29,7 +28,25 @@ module.exports = function(app){
       }, 60000 * timer.duration);
     });
 
+    timer.job = j;
     timers.push(timer);
-    console.log(timers);
+    console.log(timers.length);
+    res.send();
+  });
+
+  app.post('/timer/remove/', jsonParser, function(req, res){
+    console.log('post remove timer');
+    for(var i=0; i < timers.length; i++){
+      console.log(timers[i].time + ' : ' + req.body.hours);
+      var time = new Date(timers[i].time);
+      if(time.getHours() === req.body.hours &&
+          time.getMinutes() === req.body.minutes){
+        timers[i].job.cancel();
+        timers.splice(i, 1);
+        console.log('timer removed');
+      }
+    }
+    console.log(timers.length);
+    res.send();
   });
 }
