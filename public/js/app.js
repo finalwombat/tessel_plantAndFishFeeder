@@ -13,7 +13,7 @@
     function togglePump (event) {
       console.log('call event');
       var button = event.target;
-      var statusNode = button.parentNode.querySelector('.led-status');
+      var statusNode = button.parentNode.querySelector('#pump');
 
     //  $.get('/pump/', null, function(data){
       //  $('#results').html(data);
@@ -24,7 +24,8 @@
         if (req.readyState == 4 && req.status == 200) {
           if (req.status == 200) {
             var response = JSON.parse(req.responseText);
-            statusNode.textContent = response.on ? 'ON' : 'OFF';
+            statusNode.textContent = response.on ? 'Pump On' : 'Pump Off';
+            statusNode.className = response.on ? 'btn btn-success' : 'btn btn-danger';
           } else {
             console.log('Error');
           }
