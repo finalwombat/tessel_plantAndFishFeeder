@@ -31,6 +31,7 @@
   </div>
   <div id="currentTime"> </div>
   <div class="setTimer">
+    <div id="time"><h3>Time</h3>
     <select id="hours">
       <option value="00">00</option>
       <option value="01">01</option>
@@ -118,12 +119,24 @@
       <option value="58">58</option>
       <option value="59">59</option>
     </select>
+    <div class="duration"><h3>Duration</h3>
+      <select id="duration">
+        <option value="1">1 hour</option>
+        <option value="2">2 hour</option>
+        <option value="3">3 hour</option>
+        <option value="4">4 hour</option>
+        <option value="5">5 hour</option>
+      </select>
+    </div>
+    <div class="Frequency"><h3>Frequency</h3>
+      <select id="frequency">
+        <option value="8">every day</option>
+      </select>
+    </div>
     <button id="setTimer" type="button" class="btn btn-success" aria-label="Left Align">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
-    <button id="removeTimer" type="button" class="btn btn-danger" aria-label="Left Align">
-      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-    </button>
+    </div>
   </div>
   <h3>Timer set for</h3>
   <div id="timerValue">

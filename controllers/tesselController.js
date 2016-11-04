@@ -35,6 +35,12 @@ module.exports = {
         console.log(err)
       }
     });
+  },
+  pumpState: function(callback){
+    relay.getState(1, function(err, state){
+      if(err){callback(err)}
+      else{callback(state)}
+    })
   }
 
 }

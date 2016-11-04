@@ -6,47 +6,64 @@ var schedule = require('node-schedule');
 var timers = [];
 
 module.exports = function(app){
+
   app.get('/pump/', function(req, res){
 
     tesselController.togglePump(function(state){
-      res.send(JSON.stringify({on: state}));
+      res.send(JSON.stringify({on: state, timers: timers}));
     });
 
   });
   app.post('/timer/add/', jsonParser, function(req, res){
-
+    console.log('add timer');
     var timer = req.body;
-    var time = new Date(timer.time);
-    var j = schedule.scheduleJob({hour: time.getHours(), minute: time.getMinutes()}, function(){
+    console.log(timer);
+    console.log(timer.length);
+    if(timer){
 
-      console.log('startPump')
-      tesselController.startPump();
+      var time = new Date(timer.time);
+      var j = schedule.scheduleJob({hour: time.getHours(), minute: time.getMinutes()}, function(){
 
-      setTimeout(function(){
-        console.log('stopPump');
-        tesselController.stopPump();
-      }, 60000 * timer.duration);
-    });
+        console.log('startPump')
+        tesselController.startPump();
 
-    timer.job = j;
-    timers.push(timer);
+        setTimeout(function(){
+          console.log('stopPump');
+          tesselController.stopPump();
+        }, 60000 * timer.duration);
+      });
+      timer.job = j;
+      timers.push(timer);
+    }
+
+
     console.log(timers.length);
-    res.send();
+    var data = JSON.stringify({timers: timers});
+    res.send(data);
   });
 
   app.post('/timer/remove/', jsonParser, function(req, res){
     console.log('post remove timer');
     for(var i=0; i < timers.length; i++){
-      console.log(timers[i].time + ' : ' + req.body.hours);
-      var time = new Date(timers[i].time);
-      if(time.getHours() === req.body.hours &&
-          time.getMinutes() === req.body.minutes){
+      var time = timers[i].time;
+      if(time === req.body.time){
+        console.log(i);
+        console.log(time);
+        console.log(req.body.time);
         timers[i].job.cancel();
         timers.splice(i, 1);
-        console.log('timer removed');
       }
     }
     console.log(timers.length);
-    res.send();
+    tesselController.pumpState(function(state){
+      res.send(JSON.stringify({on: state, timers: timers}));
+    });
+  });
+
+  app.get('/getState/', function(req, res){
+    tesselController.pumpState(function(state){
+      res.send(JSON.stringify({on: state, timers: timers}));
+    });
+
   });
 }
