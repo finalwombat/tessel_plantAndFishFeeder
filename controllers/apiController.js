@@ -30,7 +30,7 @@ module.exports = function(app){
         setTimeout(function(){
           console.log('stopPump');
           tesselController.stopPump();
-        }, 60000 * timer.duration);
+        }, 60000 * 60 * timer.duration);
       });
       timer.job = j;
       timers.push(timer);

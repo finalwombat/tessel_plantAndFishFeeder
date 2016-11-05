@@ -29,9 +29,10 @@
       <button id="pump" data-led="2" type="button" class="btn btn-danger">Pump Off</button>
     </div>
   </div>
-  <div id="currentTime"> </div>
-  <div class="setTimer">
-    <div id="time"><h3>Time</h3>
+  <div class="row">
+    <div id="time" class="col-md-2"><h3>Time</h3>
+    <div class="row">
+      <div class="col-md-5">
     <select id="hours">
       <option value="00">00</option>
       <option value="01">01</option>
@@ -58,6 +59,8 @@
       <option value="22">22</option>
       <option value="23">23</option>
     </select>
+  </div>
+  <div class="col-md-5">
     <select id="minutes">
       <option value="00">00</option>
       <option value="01">01</option>
@@ -119,7 +122,11 @@
       <option value="58">58</option>
       <option value="59">59</option>
     </select>
-    <div class="duration"><h3>Duration</h3>
+  </div>
+  </div>
+
+    </div>
+    <div class="col-md-2"><h3>Duration</h3>
       <select id="duration">
         <option value="1">1 hour</option>
         <option value="2">2 hour</option>
@@ -128,20 +135,18 @@
         <option value="5">5 hour</option>
       </select>
     </div>
-    <div class="Frequency"><h3>Frequency</h3>
+    <div class="col-md-2"><h3>Frequency</h3>
       <select id="frequency">
         <option value="8">every day</option>
       </select>
-    </div>
-    <button id="setTimer" type="button" class="btn btn-success" aria-label="Left Align">
+    </div><h3>Set Timer</h3>
+    <button id="setTimer" type="button" class="btn btn-success col-md-1" aria-label="Left Align">
       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
-    </div>
   </div>
   <h3>Timer set for</h3>
-  <div id="timerValue">
+  <div id="timerValue" class="row">
   </div>
-  <div id="results"></div>
 </div>
   <script src="js/moment.min.js"></script>
   <script src="js/app.js"></script>

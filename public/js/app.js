@@ -133,15 +133,19 @@
           console.log(id);
 
           div.id = id;
+          div.className = "timer row";
           timerDiv.appendChild(div);
           var t = document.createElement('p');
           t.innerHTML = time.calendar();
+          t.className = "col-md-3"
           var d = document.createElement('p');
-          d.innerHTML = duration;
+          d.innerHTML = duration + ' hours';
+          d.className = "col-md-3"
           var f = document.createElement('p');
-          f.innerHTML = frequency;
+          f.innerHTML = "everyday";           // needs to be fixed
+          f.className = "col-md-3"
 
-          button.className = 'btn btn-danger';
+          button.className = 'btn btn-danger col-md-1';
 
           var span = document.createElement('SPAN');
           span.className = 'glyphicon glyphicon-remove'
