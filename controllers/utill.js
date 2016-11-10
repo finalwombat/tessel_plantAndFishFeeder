@@ -19,7 +19,7 @@ module.exports = {
   },
 
   createJob: function(time, callback){
-    return schedule.scheduleJob('job 1',
+    return schedule.scheduleJob(
           { hour: time.getHours(),
             minute: time.getMinutes(),
             second: time.getSeconds(),

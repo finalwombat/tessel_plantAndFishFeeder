@@ -24,7 +24,7 @@ module.exports = function(app){
     if(timer){
       var time = new Date(timer.time);
       //schedule new job with requested time
-      var j = schedule.scheduleJob({hour: time.getHours(), minute: time.getMinutes()}, function(){
+      var j = schedule.scheduleJob({time: time}, function(){
 
         tesselController.startPump();
 
