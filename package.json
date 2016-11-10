@@ -16,5 +16,8 @@
     "body-parser": "^1.15.2",
     "ejs": "^2.5.2",
     "node-schedule": "^1.2.0"
+  },
+  "devDependencies": {
+    "tape": "^4.6.2"
   }
 }
