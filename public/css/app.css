@@ -1,21 +1,63 @@
+/* Alignment*/
 
-.row {
-  margin-bottom: 20px;
+.container {
 }
-.row .row {
+
+.panel {
   margin-top: 10px;
-  margin-bottom: 0;
 }
-[class*="col-"] {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background-color: #eee;
-  background-color: rgba(86,61,124,.15);
-  border: 1px solid #ddd;
-  border: 1px solid rgba(86,61,124,.2);
+.topBar {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  align-items: baseline;
+  justify-content: space-around
+}
+.panelContainer {
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-around;
 }
 
-hr {
-  margin-top: 40px;
-  margin-bottom: 40px;
+.timeSelect {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.selectTimeDropdowns {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  justify-content: space-around;
+}
+
+.btn {
+  margin-bottom: 10px;
+}
+
+p {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+/* Colours*/
+body {
+
+}
+ h1 {
+   color: #b22b27;
+ }
+.topBar {
+  background-color: #361403;
 }
