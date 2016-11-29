@@ -19,23 +19,36 @@ module.exports = function(app){
 
  // Add new timer return response with list of timers
   app.post('/timer/add/', jsonParser, function(req, res){
+
     var timer = req.body;
 
     if(timer){
+
       var time = new Date(timer.time);
+
+      // Create reccurence rule
+      range = new schedule.Range(0,6);
+
       //schedule new job with requested time
-      var j = schedule.scheduleJob({time: time}, function(){
+      var job = schedule.scheduleJob({
+            hour: time.getHours(),
+            minute: time.getMinutes(),
+            second: time.getSeconds(),
+            milliseconds: time.getMilliseconds(),
+            dayOfWeek: range
+          },
+             function(){
 
-        tesselController.startPump();
+                tesselController.startPump();
 
-        setTimeout(function(){
-          tesselController.stopPump();
-        }, utill.getMilliseconds(timer.duration, 'h'));
-      });
-      timer.job = j;
+                setTimeout(function(){
+                  tesselController.stopPump();
+                }, utill.calculateMilliseconds(timer.duration, 'h'));
+              });
+      timer.job = job;
       timers.push(timer);
-    }
 
+    }
     var data = JSON.stringify({timers: timers});
     res.send(data);
   });

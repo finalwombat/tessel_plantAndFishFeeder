@@ -2,7 +2,7 @@ var schedule = require('node-schedule');
 
 module.exports = {
 
-  getMilliseconds: function(num, type){
+  calculateMilliseconds: function(num, type){
 
     switch (type) {
       case 's':
@@ -18,12 +18,15 @@ module.exports = {
 
   },
 
-  createJob: function(time, callback){
+  newTimer: function(time, callback){
+    var rule = new schedule.RecurrenceRule();
+    rule.dayOfWeek = new schedule.Range(0,6);
     return schedule.scheduleJob(
           { hour: time.getHours(),
             minute: time.getMinutes(),
             second: time.getSeconds(),
-            milliseconds: time.getMilliseconds()
+            milliseconds: time.getMilliseconds(),
+            dayOfWeek: rule
           },
           callback);
   }

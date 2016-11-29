@@ -33,33 +33,33 @@ test('Should trigger after 5 seconds, and trigger timeout ofter another 5', func
   t.end();
 });
 
-//getMilliseconds
+//calculateMilliseconds
 test('Should equal 1000', function(t){
-  t.equal(1000, utill.getMilliseconds(1, 's'));
+  t.equal(1000, utill.calculateMilliseconds(1, 's'));
   t.end();
 });
 
 test('Should equal 2000', function(t){
-  t.equal(2000, utill.getMilliseconds(2, 's'));
+  t.equal(2000, utill.calculateMilliseconds(2, 's'));
   t.end();
 });
 
 test('should equal 60000', function(t){
-  t.equal(60000, utill.getMilliseconds(1, 'm'));
+  t.equal(60000, utill.calculateMilliseconds(1, 'm'));
   t.end();
 });
 
 test('should equal 120000', function(t){
-  t.equal(120000, utill.getMilliseconds(2, 'm'));
+  t.equal(120000, utill.calculateMilliseconds(2, 'm'));
   t.end();
 });
 
 test('should equal 3600000', function(t){
-  t.equal(3600000, utill.getMilliseconds(1, 'h'));
+  t.equal(3600000, utill.calculateMilliseconds(1, 'h'));
   t.end();
 });
 
 test('should equal 7200000', function(t){
-  t.equal(7200000, utill.getMilliseconds(2, 'h'));
+  t.equal(7200000, utill.calculateMilliseconds(2, 'h'));
   t.end();
 });
