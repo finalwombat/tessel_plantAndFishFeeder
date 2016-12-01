@@ -25,7 +25,6 @@ module.exports = function(app){
     if(timer){
 
       var time = new Date(timer.time);
-
       // Create reccurence rule
       range = new schedule.Range(0,6);
 
