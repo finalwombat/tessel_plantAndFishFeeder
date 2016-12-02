@@ -63,8 +63,7 @@
           duration: durationValue,
           repeat: frequencyValue
         };
-        console.log('setTimer');
-        console.log(timer);
+
         var data = JSON.stringify(timer);
 
         $.ajax({
@@ -72,10 +71,7 @@
           url: "/timer/add/",
           data: data,
           success: function(data){
-            console.log(data);
             update(data.on, data.timers);
-            console.log('recieved response: ');
-            console.log(data);
           },
           dataType: 'json',
           contentType: 'application/json'

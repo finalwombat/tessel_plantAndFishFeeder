@@ -1,10 +1,8 @@
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var tesselController = require('./tesselController');
-var schedule = require('node-schedule');
-var utill = require('./utill');
+var timersController = require('./timersController');
 
-var timers = [];
 
 module.exports = function(app){
 
@@ -20,35 +18,9 @@ module.exports = function(app){
  // Add new timer return response with list of timers
   app.post('/timer/add/', jsonParser, function(req, res){
 
-    var timer = req.body;
+    timersController.addTimer(req.body)
 
-    if(timer){
-
-      var time = new Date(timer.time);
-      // Create reccurence rule
-      range = new schedule.Range(0,6);
-
-      //schedule new job with requested time
-      var job = schedule.scheduleJob({
-            hour: time.getHours(),
-            minute: time.getMinutes(),
-            second: time.getSeconds(),
-            milliseconds: time.getMilliseconds(),
-            dayOfWeek: range
-          },
-             function(){
-
-                tesselController.startPump();
-
-                setTimeout(function(){
-                  tesselController.stopPump();
-                }, utill.calculateMilliseconds(timer.duration, 'h'));
-              });
-      timer.job = job;
-      timers.push(timer);
-
-    }
-    var data = JSON.stringify({timers: timers});
+    var data = JSON.stringify({timers: timersController.getTimers()});
     res.send(data);
   });
 

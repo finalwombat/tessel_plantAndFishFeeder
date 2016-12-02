@@ -1,33 +1,22 @@
 var schedule = require('node-schedule');
+var tesselController = require('./tesselController');
 
 module.exports = {
 
   calculateMilliseconds: function(num, type){
 
     switch (type) {
-      case 's':
+      case 'seconds':
           return (num * 1000);
         break;
-      case 'm':
+      case 'minutes':
         return (num * 60 * 1000);
         break;
-      case 'h':
+      case 'hours':
         return (num * 60 * 60 * 1000);
         break;
     }
 
   },
 
-  newTimer: function(time, callback){
-    var rule = new schedule.RecurrenceRule();
-    rule.dayOfWeek = new schedule.Range(0,6);
-    return schedule.scheduleJob(
-          { hour: time.getHours(),
-            minute: time.getMinutes(),
-            second: time.getSeconds(),
-            milliseconds: time.getMilliseconds(),
-            dayOfWeek: rule
-          },
-          callback);
-  }
 }
