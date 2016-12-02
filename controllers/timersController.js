@@ -11,8 +11,14 @@ module.exports = {
     timers.push(timer);
   },
 
-  removeTimer: function(timer){
-
+  removeTimer: function(time){
+    for(var i=0; i < timers.length; i++){
+      var time = timers[i].time;
+      if(time === time){
+        timers[i].job.cancel();
+        timers.splice(i, 1);
+      }
+    }
   },
 
   getTimers: function(){
@@ -45,8 +51,8 @@ function createJob(timer){
 function getRecuranceRule(day){
   if(day === '8'){
     return (new schedule.Range(0,6));
-  else{
-    return day;
   }
+  else {
+    return day;
   }
 }

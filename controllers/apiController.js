@@ -9,38 +9,45 @@ module.exports = function(app){
     //Toggle pump and return response with pump state and list of active timers
   app.get('/pump/', function(req, res){
 
-    tesselController.togglePump(function(state){
-      res.send(JSON.stringify({on: state, timers: timers}));
-    });
-
+    tesselController.togglePump(function(){
+      getCurrentState(function(state){
+        res.send(state);
+      })
   });
+});
 
  // Add new timer return response with list of timers
   app.post('/timer/add/', jsonParser, function(req, res){
 
     timersController.addTimer(req.body)
 
-    var data = JSON.stringify({timers: timersController.getTimers()});
-    res.send(data);
+    getCurrentState(function(state){
+      res.send(state);
+    })
+
   });
 
   app.post('/timer/remove/', jsonParser, function(req, res){
-    for(var i=0; i < timers.length; i++){
-      var time = timers[i].time;
-      if(time === req.body.time){
-        timers[i].job.cancel();
-        timers.splice(i, 1);
-      }
-    }
-    tesselController.pumpState(function(state){
-      res.send(JSON.stringify({on: state, timers: timers}));
-    });
+
+    timersController.removeTimer(req.body.time);
+
+    getCurrentState(function(state){
+      res.send(state);
+    })
   });
 
   app.get('/getState/', function(req, res){
+
     tesselController.pumpState(function(state){
-      res.send(JSON.stringify({on: state, timers: timers}));
+      res.send(state);
     });
 
+  });
+}
+
+function getCurrentState(callback){
+  var timers = timersController.getTimers();
+  tesselController.pumpState(function(state){
+    callback(JSON.stringify({on: state, timers: timers}));
   });
 }

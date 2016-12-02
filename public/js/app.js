@@ -20,7 +20,6 @@
             var response = JSON.parse(req.responseText);
             statusNode.textContent = response.on ? 'Pump On' : 'Pump Off';
             statusNode.className = response.on ? 'btn btn-success' : 'btn btn-danger';
-            console.log(response);
           } else {
             console.log('Error');
           }
@@ -42,11 +41,6 @@
         var minute = minutes.options[minutes.selectedIndex].value;
         var durationValue = duration.options[duration.selectedIndex].value;
         var frequencyValue = frequency.options[frequency.selectedIndex].value;
-        console.log('user values:');
-        console.log(hour);
-        console.log(minute);
-        console.log(durationValue);
-        console.log(frequencyValue);
 
         // create new date from user valuse
         var time = moment().hours(parseInt(hour)).minutes(parseInt(minute));
