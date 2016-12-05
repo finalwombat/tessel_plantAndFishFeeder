@@ -8,7 +8,7 @@
 
 
     function togglePump () {
-    
+
       $.get('/pump/', function(data){
           var data = JSON.parse(data);
           update(data.on, data.timers)
@@ -16,7 +16,7 @@
         });
       }
 
-      function setTimer(){
+    function setTimer(){
 
         //get the user values
         var hours = document.getElementById('hours');
@@ -67,7 +67,6 @@
           data: JSON.stringify({time: time}),
           success:  function(data){
             update(data.on, data.timers);
-            console.log('recieved response: ' + data);
           },
           dataType: 'json',
           contentType: 'application/json'
@@ -83,7 +82,6 @@
         });
 
       function update(pumpStatus, timers){
-        console.log('pump' + pumpStatus + ' timers ' + timers);
         var timerDiv = document.getElementById('timerValue');
         var pumpButton = document.getElementById('pump');
 
@@ -103,9 +101,6 @@
           var frequency = timers[i].frequency;
           var id = moment.utc(time).format();
           var button = document.createElement('button');
-
-          console.log('before set id')
-          console.log(id);
 
           div.id = id;
           div.className = "timer row";
@@ -132,8 +127,6 @@
           div.appendChild(button);
           button.addEventListener('click', function(){
             removeTimer(id);
-            console.log('id set in button listener');
-            console.log(id);
           });
 
         }
