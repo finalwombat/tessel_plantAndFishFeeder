@@ -11,10 +11,11 @@ var port = process.env.PORT || 8080;
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 htmlController(app);
 apiController(app);
 
 app.listen(port);
-// Put a friendly message in the terminal
+
 console.log("Server running at wombat.local:" + port);

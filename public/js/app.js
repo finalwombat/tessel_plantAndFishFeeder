@@ -7,26 +7,13 @@
     setTimerButton.addEventListener('click', setTimer);
 
 
-    function togglePump (event) {
+    function togglePump () {
+    
+      $.get('/pump/', function(data){
+          var data = JSON.parse(data);
+          update(data.on, data.timers)
 
-      var button = event.target;
-      var statusNode = button.parentNode.querySelector('#pump');
-
-
-      var req = new XMLHttpRequest();
-      req.onreadystatechange = function(e) {
-        if (req.readyState == 4 && req.status == 200) {
-          if (req.status == 200) {
-            var response = JSON.parse(req.responseText);
-            statusNode.textContent = response.on ? 'Pump On' : 'Pump Off';
-            statusNode.className = response.on ? 'btn btn-success' : 'btn btn-danger';
-          } else {
-            console.log('Error');
-          }
-        }
-      }
-      req.open('GET', '/pump/', true);
-      req.send();
+        });
       }
 
       function setTimer(){
@@ -92,8 +79,6 @@
       $.get('/getState/', function(data){
           var data = JSON.parse(data);
           update(data.on, data.timers)
-          console.log('recieved response: ');
-          console.log(data);
 
         });
 
