@@ -18,33 +18,8 @@
 
     function setTimer(){
 
-        //get the user values
-        var hours = document.getElementById('hours');
-        var minutes = document.getElementById('minutes');
-        var duration = document.getElementById('duration');
-        var frequency = document.getElementById('frequency');
-
-        var hour = hours.options[hours.selectedIndex].value;
-        var minute = minutes.options[minutes.selectedIndex].value;
-        var durationValue = duration.options[duration.selectedIndex].value;
-        var frequencyValue = frequency.options[frequency.selectedIndex].value;
-
-        // create new date from user valuse
-        var time = moment().hours(parseInt(hour)).minutes(parseInt(minute));
-        var now = moment();
-
-        if(moment(time).isBefore(now)){
-          time.add(1, 'days');
-        }
-
-        timeUTC = moment.utc(time);
-
-        var timer = {
-          time: timeUTC.format(),
-          duration: durationValue,
-          repeat: frequencyValue
-        };
-
+        var values = getTimerElementValues();
+        var timer = createTimer(values);
         var data = JSON.stringify(timer);
 
         $.ajax({
@@ -58,6 +33,52 @@
           contentType: 'application/json'
         });
 
+      }
+
+      function getTimerElementValues(){
+        var hours = document.getElementById('hours');
+        var minutes = document.getElementById('minutes');
+        var duration = document.getElementById('duration');
+        var frequency = document.getElementById('frequency');
+
+        var hour = hours.options[hours.selectedIndex].value;
+        var minute = minutes.options[minutes.selectedIndex].value;
+        var durationValue = duration.options[duration.selectedIndex].value;
+        var frequencyValue = frequency.options[frequency.selectedIndex].value;
+
+        var values = {
+          hour: hour,
+          minute: minute,
+          duration: durationValue,
+          frequency: frequencyValue
+        }
+
+        return values;
+      }
+
+      function createTimer(values){
+
+        // create new date from user values
+        var time = moment().hours(parseInt(values.hour))
+                            .minutes(parseInt(values.minute));
+
+        var now = moment();
+
+        // Make sure timer is set for the future
+        if(moment(time).isBefore(now)){
+          time.add(1, 'days');
+        }
+
+        // Convert to utc time for server
+        timeUTC = moment.utc(time);
+
+        var timer = {
+          time: timeUTC.format(),
+          duration: values.duration,
+          repeat: values.frequency
+        }
+
+        return timer;
       }
 
       function removeTimer(time){
