@@ -1,17 +1,27 @@
 
-    // Add eventlistener to buttons
-    var pumpButton = document.getElementById('pump');
-    pumpButton.addEventListener('click', togglePump);
+  //on startup
+  setEventListeners();
 
-    var setTimerButton = document.getElementById('setTimer');
-    setTimerButton.addEventListener('click', setTimer);
+  $.get('/getState/', function(data){
+      var data = JSON.parse(data);
+      update(data)
 
+    });
+
+
+    function setEventListeners(){
+      var pumpButton = document.getElementById('pump');
+      pumpButton.addEventListener('click', togglePump);
+
+      var setTimerButton = document.getElementById('setTimer');
+      setTimerButton.addEventListener('click', setTimer);
+    }
 
     function togglePump () {
 
       $.get('/pump/', function(data){
           var data = JSON.parse(data);
-          update(data.on, data.timers)
+          update(data)
 
         });
       }
@@ -27,7 +37,7 @@
           url: "/timer/add/",
           data: data,
           success: function(data){
-            update(data.on, data.timers);
+            update(data);
           },
           dataType: 'json',
           contentType: 'application/json'
@@ -87,7 +97,7 @@
           url: "/timer/remove/",
           data: JSON.stringify({time: time}),
           success:  function(data){
-            update(data.on, data.timers);
+            update(data);
           },
           dataType: 'json',
           contentType: 'application/json'
@@ -95,60 +105,89 @@
 
       }
 
-      //on startup
-      $.get('/getState/', function(data){
-          var data = JSON.parse(data);
-          update(data.on, data.timers)
+      function update(data){
 
-        });
+        var pumpStatus = data.on;
+        var timers = data.timers;
 
-      function update(pumpStatus, timers){
-        var timerDiv = document.getElementById('timerValue');
+
         var pumpButton = document.getElementById('pump');
 
+        // update pumpButton
         pumpButton.textContent = pumpStatus ? "Pump On" : "Pump Off";
         pumpButton.className = pumpStatus ? 'btn btn-success' : 'btn btn-danger';
 
-        // remove all child nides
-        while (timerDiv.firstChild) {
-          timerDiv.removeChild(timerDiv.firstChild);
+        // update timerDiv
+        console.log('update');
+        console.log(timers)
+        updateTimers(timers);
+
+      }
+
+        function updateTimers(timers){
+          var node = document.getElementById('timerValue');
+          removeAllChildNodes(node);
+          addTimers(node, timers);
         }
 
-        //add new nodes
-        for(var i=0; i < timers.length; i++){
-          var div = document.createElement('div');
-          var time = moment(timers[i].time);
-          var duration = timers[i].duration;
-          var frequency = timers[i].frequency;
-          var id = moment.utc(time).format();
-          var button = document.createElement('button');
+        function removeAllChildNodes(node){
+          while (node.firstChild) {
+            node.removeChild(node.firstChild);
+          }
+        }
 
+        function addTimers(node, timers){
+
+          for(var i=0; i < timers.length; i++){
+            node.appendChild(createTimerDiv(timers[i]));
+
+          }
+        }
+        function createTimerDiv(timer){
+          // Create new div
+          var div = document.createElement('div');
+
+          // get timer values
+          var time = moment(timer.time);    // convert to moment for better formating
+          var duration = timer.duration;
+          var frequency = timer.frequency;
+          var id = moment.utc(time).format();  // Each div's id is the timers time in utc format
+
+          // Assign id and className
           div.id = id;
           div.className = "timer row";
-          timerDiv.appendChild(div);
+
+
+          // New time element
           var t = document.createElement('p');
           t.innerHTML = time.calendar();
           t.className = "col-md-3"
+
+          // New duration element
           var d = document.createElement('p');
           d.innerHTML = duration + ' hours';
           d.className = "col-md-3"
+
+          // New frequency element
           var f = document.createElement('p');
           f.innerHTML = "everyday";           // needs to be fixed
           f.className = "col-md-3"
 
+          // Create new button element
+          var button = document.createElement('button');
           button.className = 'btn btn-danger col-md-1';
 
           var span = document.createElement('SPAN');
           span.className = 'glyphicon glyphicon-remove'
           button.appendChild(span);
+          button.addEventListener('click', function(){
+            removeTimer(id);
+          });
 
           div.appendChild(t);
           div.appendChild(d);
           div.appendChild(f);
           div.appendChild(button);
-          button.addEventListener('click', function(){
-            removeTimer(id);
-          });
 
+          return div;
         }
-      }
