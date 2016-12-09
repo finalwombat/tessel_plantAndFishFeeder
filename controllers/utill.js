@@ -1,5 +1,4 @@
-var schedule = require('node-schedule');
-var tesselController = require('./tesselController');
+
 
 module.exports = {
 
@@ -17,6 +16,6 @@ module.exports = {
         break;
     }
 
-  },
+  }
 
 }
