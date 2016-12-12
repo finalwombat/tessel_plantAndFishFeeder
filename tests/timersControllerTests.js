@@ -15,6 +15,8 @@ var timer2 = {
               frequency: 8     // Everyday
               }
 
+// Functions to run at the start and end of the duration
+var tasks = {onStart: function(){} , onEnd: function(){} };
 
 // *** recurance rule
 test('should return instance of reccuranceRule', function(t){
@@ -64,11 +66,8 @@ test('should be a schedule.Range object with correct values',function(t){
 // *** Crerate a new timer
 test('should be one more timer after we add one', function(t){
 
-  // get how many timers there currently are
+  // get timer count
   var timersBefore = timersController.getTimers().length;
-
-  // Functions to run at the start and end of the duration
-  var tasks = {onStart: function(){} , onEnd: function(){} };
 
   // Add timer
   timersController.addTimer(timer1, tasks);
@@ -86,9 +85,6 @@ test('should be one more timer after we add one', function(t){
 
 // *** Remove timer
 test('should be one less timer after we remove one', function(t){
-
-  // Functions to run at the start and end of the duration
-  var tasks = {onStart: function(){} , onEnd: function(){} };
 
   // Add timer
   timersController.addTimer(timer1, tasks);
@@ -111,9 +107,6 @@ test('should be one less timer after we remove one', function(t){
 
 // *** Check if job is created
 test('should be an instance of schedule.Job', function(t){
-
-  // Create tasks
-  var tasks = { onStart: function(){}, onEnd: function(){} };
 
   // Add timer
   timersController.addTimer(timer1, tasks);

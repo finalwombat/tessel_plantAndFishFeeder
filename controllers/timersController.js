@@ -42,7 +42,7 @@ module.exports = {
   createJob: function(timer, tasks){
 
     var rule = this.getRecuranceRule(timer);
-    console.log('rule', rule);
+    
     return schedule.scheduleJob(
           rule,
           function(){
