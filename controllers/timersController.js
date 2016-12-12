@@ -40,16 +40,11 @@ module.exports = {
   },
 
   createJob: function(timer, tasks){
-    var time = new Date(timer.time);
-    //dayOfWeek = getRecuranceRule(timer.frequency);
 
+    var rule = this.getRecuranceRule(timer);
+    console.log('rule', rule);
     return schedule.scheduleJob(
-          { hour: time.getHours(),
-            minute: time.getMinutes(),
-            second: time.getSeconds(),
-            milliseconds: time.getMilliseconds()
-      //      dayOfWeek: dayOfWeek
-          },
+          rule,
           function(){
             tasks.onStart();
             setTimeout(function(){
@@ -75,29 +70,5 @@ module.exports = {
       }
     }
     return rule;
-  }
-}
-
-
-
-/* getReccuranceRule should work something like this
-    and replace what is happening in the createJob function
-
-var rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [0, new schedule.Range(4, 6)];
-rule.hour = 17;
-rule.minute = 0;
-
-var j = schedule.scheduleJob(rule, function(){
-  console.log('Today is recognized by Rebecca Black!');
-});
-*/
-
-function getRecuranceRule(day){
-  if(day === '8'){
-    return (new schedule.Range(0,6));
-  }
-  else {
-    return day;
   }
 }

@@ -139,7 +139,6 @@ test('Should trigger after 5 seconds, and trigger timeout ofter another 5', func
   var timer = {
     time: new Date(Date.now() + 5000),
     duration: 5,     // 5 seconds
-    frequency: 5     // Every Friday
   }
 
   //
