@@ -9,6 +9,12 @@ var timer1 = {
               frequency: 5     // Every Friday
               }
 
+var timer2 = {
+              time: new Date(),
+              duration: 300,     // 5 minutes
+              frequency: 8     // Everyday
+              }
+
 
 // *** recurance rule
 test('should return instance of reccuranceRule', function(t){
@@ -19,16 +25,41 @@ test('should return instance of reccuranceRule', function(t){
   t.end();
 });
 
-// *** Recurance rule sets rule with correct values
-test('shoud return rule with correct values', function(t){
-
+// *** Recurance rule sets rule with correct time values
+test('shoud return rule with correct time values', function(t){
+  t.plan(3);
   // Get rule
   var rule = timersController.getRecuranceRule(timer1);
-console.log('hour: ', rule.hour);
-console.log('hour: ', timer1.time.getHours());
+
   t.ok(rule.hour === timer1.time.getHours());
+  t.ok(rule.minute === timer1.time.getMinutes());
+  t.ok(rule.second === timer1.time.getSeconds());
   t.end();
 })
+
+// *** Recurance rule - dayOfWeek - frequency of once a week (value under 7)
+test('should return rule with correct dayOfWeek', function(t){
+  var rule = timersController.getRecuranceRule(timer1);
+
+  t.ok(rule.dayOfWeek === timer1.frequency);
+  t.end();
+})
+
+// *** Recurance rule - dayOfWeek - frequency of more than once a week
+test('should be instanceOf schedule.range',function(t){
+  var rule = timersController.getRecuranceRule(timer2);
+  t.ok(rule.dayOfWeek instanceof schedule.Range);
+  t.end()
+})
+
+// *** Recurance rule - dayOfWeek - test for everyday
+test('should be a schedule.Range object with correct values',function(t){
+  var rule = timersController.getRecuranceRule(timer2);
+  t.ok(rule.dayOfWeek.start === 0);
+  t.ok(rule.dayOfWeek.end === 6);
+  t.end()
+})
+
 
 // *** Crerate a new timer
 test('should be one more timer after we add one', function(t){

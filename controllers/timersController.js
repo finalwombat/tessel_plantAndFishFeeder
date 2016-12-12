@@ -62,6 +62,18 @@ module.exports = {
   getRecuranceRule: function(timer){
     var rule = new schedule.RecurrenceRule();
     rule.hour = timer.time.getHours();
+    rule.minute = timer.time.getMinutes();
+    rule.second = timer.time.getSeconds();
+
+    // Set dayOfWeek
+    if(timer.frequency <= 6){
+      rule.dayOfWeek = timer.frequency;
+    }
+    else if(timer.frequency > 6){
+      if(timer.frequency === 8){      // Everyday
+        rule.dayOfWeek = new schedule.Range(0,6);
+      }
+    }
     return rule;
   }
 }
