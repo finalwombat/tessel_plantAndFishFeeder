@@ -15,19 +15,23 @@ servo.on('ready', function(){
   });
 })
 
-var position = 0;
+
 
 module.exports = {
 
   feedFish: function(){
-    setInterval(function(){
-      servo.move(servo1, position);
-      console.log('moving servo: ', position);
-      position += 0.1;
-      if (position > 1){
-        position = 0;
-      }
-    }, 50);
+    var position = 0;
+    
+    var i =
+     setInterval(function(){
+        servo.move(servo1, position);
+        position += 0.1;
+        if (position > 1){
+          clearInterval(i);
+        }
+        console.log('moving servo: ', position);
+      }, 50);
+
   },
 
 

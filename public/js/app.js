@@ -34,7 +34,7 @@ window.onload = function(){
     function setTimer(){
 
         var values = getTimerElementValues();
-        var timer = createTimer(values);
+        var timer = Timer(values);
         var data = JSON.stringify(timer);
 
         $.ajax({
@@ -77,7 +77,7 @@ window.onload = function(){
         return values;
       }
 
-      function createTimer(values){
+      function Timer(values){
 
         // create new date from user values
         var time = moment().hours(parseInt(values.hour))
@@ -150,11 +150,11 @@ window.onload = function(){
         function addTimers(node, timers){
 
           for(var i=0; i < timers.length; i++){
-            node.appendChild(createTimerDiv(timers[i]));
+            node.appendChild(TimerDiv(timers[i]));
 
           }
         }
-        function createTimerDiv(timer){
+        function TimerDiv(timer){
           // Create new div
           var div = document.createElement('div');
 
