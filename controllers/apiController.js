@@ -46,6 +46,14 @@ module.exports = function(app){
     });
 
   });
+
+  app.get('/feedFish/', function(req, res){
+
+    tesselController.feedFish();
+    console.log('get feedFish');
+    res.send('fish fed');
+  });
+
 }
 
 function getCurrentState(callback){

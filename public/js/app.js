@@ -17,6 +17,9 @@ window.onload = function(){
 
       var setTimerButton = document.getElementById('setTimer');
       setTimerButton.addEventListener('click', setTimer);
+
+      var feedFishButton = document.getElementById('feedFish');
+      feedFishButton.addEventListener('click', feedFish);
     }
 
     function togglePump () {
@@ -46,6 +49,12 @@ window.onload = function(){
         });
 
       }
+
+    function feedFish(){
+      $.get('/feedFish/', function(data){
+        console.log(data);
+      })
+    }
 
       function getTimerElementValues(){
         var hours = document.getElementById('hours');
