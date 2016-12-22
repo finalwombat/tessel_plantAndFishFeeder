@@ -1,3 +1,5 @@
+window.onload = function(){
+
 
   //on startup
   setEventListeners();
@@ -191,3 +193,4 @@
 
           return div;
         }
+}

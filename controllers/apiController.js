@@ -19,7 +19,10 @@ module.exports = function(app){
  // Add new timer return response with list of timers
   app.post('/timer/add/', jsonParser, function(req, res){
 
-    timersController.addTimer(req.body)
+    var tasks = {onStart: function(){tesselController.startPump()}
+                  , onEnd: function(){tesselController.stopPump()}
+                };
+    timersController.addTimer(req.body, tasks);
 
     getCurrentState(function(state){
       res.send(state);

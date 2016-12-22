@@ -42,11 +42,12 @@ module.exports = {
   createJob: function(timer, tasks){
 
     var rule = this.getRecuranceRule(timer);
-    
+
     return schedule.scheduleJob(
           rule,
           function(){
             tasks.onStart();
+            console.log('onStart');
             setTimeout(function(){
               tasks.onEnd();
             }, utill.calculateMilliseconds(timer.duration, 'seconds'))
@@ -56,9 +57,10 @@ module.exports = {
 
   getRecuranceRule: function(timer){
     var rule = new schedule.RecurrenceRule();
-    rule.hour = timer.time.getHours();
-    rule.minute = timer.time.getMinutes();
-    rule.second = timer.time.getSeconds();
+    var time = new Date(timer.time);
+    rule.hour = time.getHours();
+    rule.minute = time.getMinutes();
+    rule.second = time.getSeconds();
 
     // Set dayOfWeek
     if(timer.frequency <= 6){
