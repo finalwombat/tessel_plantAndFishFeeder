@@ -21,16 +21,16 @@ module.exports = {
 
   feedFish: function(){
     var position = 0;
-    
+
     var i =
      setInterval(function(){
         servo.move(servo1, position);
-        position += 0.1;
+        position += 0.01;
         if (position > 1){
           clearInterval(i);
         }
         console.log('moving servo: ', position);
-      }, 50);
+      }, 10);
 
   },
 
