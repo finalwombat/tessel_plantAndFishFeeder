@@ -30,6 +30,20 @@ module.exports = function(app){
 
   });
 
+  app.post('/timer/addFishFeeder/', jsonParser, function(req, res){
+    console.log(req.body);
+    var tasks = {onStart: function(){ tesselController.feedFish(req.body.feeds)}
+
+                  , onEnd: function(){console.log('Stopped feeding')}
+                };
+    timersController.addTimer(req.body, tasks);
+
+    getCurrentState(function(state){
+      res.send(state);
+    })
+
+  });
+
   app.post('/timer/remove/', jsonParser, function(req, res){
 
     timersController.removeTimer(req.body.time);

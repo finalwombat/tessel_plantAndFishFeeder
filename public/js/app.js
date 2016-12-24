@@ -20,6 +20,9 @@ window.onload = function(){
 
       var feedFishButton = document.getElementById('feedFish');
       feedFishButton.addEventListener('click', feedFish);
+
+      var setFishFeederTimerButton = document.getElementById('setFishFeederTimer');
+      setFishFeederTimerButton.addEventListener('click', setFishFeederTimer);
     }
 
     function togglePump () {
@@ -56,6 +59,25 @@ window.onload = function(){
       })
     }
 
+    function setFishFeederTimer(){
+
+        var values = getFishFeederTimerElementValues();
+        var timer = Timer(values);
+        var data = JSON.stringify(timer);
+
+        $.ajax({
+          type: "POST",
+          url: "/timer/addFishFeeder/",
+          data: data,
+          success: function(data){
+            update(data);
+          },
+          dataType: 'json',
+          contentType: 'application/json'
+        });
+
+      }
+
       function getTimerElementValues(){
         var hours = document.getElementById('hours');
         var minutes = document.getElementById('minutes');
@@ -71,6 +93,27 @@ window.onload = function(){
           hour: hour,
           minute: minute,
           duration: durationValue,
+          frequency: frequencyValue
+        }
+
+        return values;
+      }
+
+      function getFishFeederTimerElementValues(){
+        var hours = document.getElementById('fishhours');
+        var minutes = document.getElementById('fishminutes');
+        var feeds = document.getElementById('feeds');
+        var frequency = document.getElementById('fishfrequency');
+
+        var hour = hours.options[hours.selectedIndex].value;
+        var minute = minutes.options[minutes.selectedIndex].value;
+        var feedsValue = feeds.options[feeds.selectedIndex].value;
+        var frequencyValue = frequency.options[frequency.selectedIndex].value;
+
+        var values = {
+          hour: hour,
+          minute: minute,
+          feeds: feedsValue,
           frequency: frequencyValue
         }
 
@@ -93,10 +136,19 @@ window.onload = function(){
         // Convert to utc time for server
         timeUTC = moment.utc(time);
 
-        var timer = {
-          time: timeUTC.format(),
-          duration: values.duration,
-          repeat: values.frequency
+        if(values.duration){
+          var timer = {
+            time: timeUTC.format(),
+            duration: values.duration,
+            repeat: values.frequency
+          }
+        }
+        else if(values.feeds){
+          var timer = {
+            time: timeUTC.format(),
+            feeds: values.feeds,
+            repeat: values.frequency
+          }
         }
 
         return timer;

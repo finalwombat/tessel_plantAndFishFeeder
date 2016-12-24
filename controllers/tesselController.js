@@ -29,11 +29,32 @@ module.exports = {
         if (position > 1){
           clearInterval(i);
         }
-        console.log('moving servo: ', position);
       }, 10);
 
   },
 
+  feedFish: function(times){
+    var position = 0;
+    var count = 0;
+    var i =
+     setInterval(function(){
+        servo.move(servo1, position);
+        console.log('position:' + position)
+        servo.read(servo1, function(err, reading){
+          console.log('reading: ' + reading)
+        })
+        position += 0.01;
+        if (position > 1){
+          count++;
+          position = 0;
+        }
+
+        if(count >= times){
+          clearInterval(i);
+        }
+
+      }, 10);
+  },
 
   togglePump:  function(callback){
     relay.toggle(1, function(err){
