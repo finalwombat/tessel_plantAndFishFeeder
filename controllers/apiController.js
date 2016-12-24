@@ -41,9 +41,9 @@ module.exports = function(app){
 
   app.get('/getState/', function(req, res){
 
-    tesselController.pumpState(function(state){
+    getCurrentState(function(state){
       res.send(state);
-    });
+    })
 
   });
 
@@ -59,6 +59,7 @@ module.exports = function(app){
 function getCurrentState(callback){
   var timers = timersController.getTimers();
   tesselController.pumpState(function(state){
-    callback(JSON.stringify({on: state, timers: timers}));
+    data = JSON.stringify({on: state, timers: timers});
+    callback(data);
   });
 }
