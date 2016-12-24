@@ -26,14 +26,14 @@ module.exports = {
      setInterval(function(){
         servo.move(servo1, position);
         position += 0.01;
-        if (position > 1){
+        if (position > 1.50){
           clearInterval(i);
         }
       }, 10);
 
   },
 
-  feedFish: function(times){
+  feedFishTimes: function(times){
     var position = 0;
     var count = 0;
     var i =

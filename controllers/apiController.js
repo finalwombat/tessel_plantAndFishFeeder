@@ -32,7 +32,7 @@ module.exports = function(app){
 
   app.post('/timer/addFishFeeder/', jsonParser, function(req, res){
     console.log(req.body);
-    var tasks = {onStart: function(){ tesselController.feedFish(req.body.feeds)}
+    var tasks = {onStart: function(){ tesselController.feedFishTimes(req.body.feeds)}
 
                   , onEnd: function(){console.log('Stopped feeding')}
                 };
