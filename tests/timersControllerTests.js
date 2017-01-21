@@ -124,14 +124,14 @@ test('should be an instance of schedule.Job', function(t){
 
 
 // *** Check if functions are run at the start and end of the tinmer
-test('Should trigger after 5 seconds, and trigger timeout ofter another 5', function(t){
+test('Should trigger after 5 seconds, and trigger timeout after 1 minute', function(t){
 
   t.plan(2);
 
   // Create timer
   var timer = {
     time: new Date(Date.now() + 5000),
-    duration: 5,     // 5 seconds
+    duration: 1,     // 5 seconds
   }
 
   //

@@ -169,7 +169,7 @@ window.onload = function(){
       }
 
       function update(data){
-
+      
         var pumpStatus = data.on;
         var timers = data.timers;
 

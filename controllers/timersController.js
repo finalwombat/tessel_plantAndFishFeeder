@@ -50,7 +50,7 @@ module.exports = {
             console.log('onStart');
             setTimeout(function(){
               tasks.onEnd();
-            }, utill.calculateMilliseconds(timer.duration, 'seconds'))
+            }, utill.calculateMilliseconds(timer.duration, 'minutes'))
           }
           )
   },
