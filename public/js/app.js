@@ -169,7 +169,7 @@ window.onload = function(){
       }
 
       function update(data){
-      
+
         var pumpStatus = data.on;
         var timers = data.timers;
 
@@ -228,7 +228,7 @@ window.onload = function(){
 
           // New duration element
           var d = document.createElement('p');
-          d.innerHTML = duration + ' hours';
+          d.innerHTML = duration + ' minutes';
           d.className = "col-md-3"
 
           // New frequency element
