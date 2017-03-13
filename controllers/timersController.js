@@ -41,7 +41,7 @@ module.exports = {
 
   createJob: function(timer, tasks){
 
-    var rule = this.getRecuranceRule(timer);
+    var rule = this.getRecurrenceRule(timer);
 
     return schedule.scheduleJob(
           rule,
@@ -55,7 +55,7 @@ module.exports = {
           )
   },
 
-  getRecuranceRule: function(timer){
+  getRecurrenceRule: function(timer){
     var rule = new schedule.RecurrenceRule();
     var time = new Date(timer.time);
     rule.hour = time.getHours();
